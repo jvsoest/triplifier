@@ -1,7 +1,5 @@
 #!/bin/bash
-cd ../containerTest && sh setupdb.sh
-
-cd ../tests
+docker run --rm -d --name postgresdb -v $(pwd)/db_files:/docker-entrypoint-initdb.d/ -e POSTGRES_PASSWORD=postgres -p 5432:5432 postgres
 
 # Wait for the database to be ready by checking connectivity
 until docker exec postgresdb pg_isready -U postgres; do
